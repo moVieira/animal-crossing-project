@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Animal Crossing Villagers 🌸</title>
+<meta charset="UTF-8">
+<title>Animal Crossing Villagers 🌸</title>
 </head>
 <body>
-  <h1>🌱 Villagers</h1>
-  <button onclick="loadVillagers()">Carregar Villagers</button>
-  <ul id="villagers"></ul>
+<h1>🌱 Villagers</h1>
+<button onclick="loadVillagers()">Carregar Villagers</button>
+<ul id="villagers"></ul>
 
-  <script>
+<script>
     async function loadVillagers() {
         const res = await fetch("http://localhost:3000/villagers");
         const data = await res.json();
