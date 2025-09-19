@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Animal Crossing Villagers 🌸</title>
+</head>
+<body>
+  <h1>🌱 Villagers</h1>
+  <button onclick="loadVillagers()">Carregar Villagers</button>
+  <ul id="villagers"></ul>
+
+  <script>
+    async function loadVillagers() {
+        const res = await fetch("http://localhost:3000/villagers");
+        const data = await res.json();
+        const list = document.getElementById("villagers");
+        list.innerHTML = "";
+        data.forEach(v => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <img src="${v.image_url}" width="50"/> 
+            <b>${v.name}</b> - ${v.species} (${v.personality})
+            <button onclick="addFavorite('${v.name}')">⭐ Favoritar</button>
+        `;
+        list.appendChild(li);
+        });
+    }
+
+    async function addFavorite(name) {
+        const token = localStorage.getItem("token"); // pega do login
+        const res = await fetch("http://localhost:3000/favorites/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+        body: JSON.stringify({ villager_name: name })
+        });
+        const result = await res.json();
+        alert(result.message);
+    }
+</script>
+</body>
+</html>
